@@ -2,7 +2,7 @@
 
 Pipeline ELT no ecossistema Google Cloud que transforma dados brutos de vendas de uma rede de concessionárias em um modelo estrela na camada gold, alimentando 5 dashboards estratégicos no Looker Studio.
 
-![My Screenshot](file:///C:/Users/Usu%C3%A1rio/Documents/01_Ag_Abobora_Digital/OpenCode/novaDrive/docs/dahsboard%20clientes.JPG)
+![Produto de Dados]([file:///C:/Users/Usu%C3%A1rio/Documents/01_Ag_Abobora_Digital/OpenCode/novaDrive/docs/dahsboard%20clientes.JPG](https://github.com/DevVitorSantos/Produto_dados_concessionarias/blob/68bba8db265beaa08c7ce25f0684a703ba55c6e0/img/infografico.png))
 ---
 
 ## Objetivo do projeto:
