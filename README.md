@@ -2,7 +2,7 @@
 
 Pipeline ELT no ecossistema Google Cloud que transforma dados brutos de vendas de uma rede de concessionárias em um modelo estrela na camada gold, alimentando 5 dashboards estratégicos no Looker Studio.
 
-![Produto de Dados]([file:///C:/Users/Usu%C3%A1rio/Documents/01_Ag_Abobora_Digital/OpenCode/novaDrive/docs/dahsboard%20clientes.JPG](https://github.com/DevVitorSantos/Produto_dados_concessionarias/blob/68bba8db265beaa08c7ce25f0684a703ba55c6e0/img/infografico.png))
+![Produto de Dados](img/infografico.png)
 ---
 
 ## Objetivo do projeto:
@@ -26,7 +26,8 @@ Atualmente o projeto responde a **7 perguntas de negócio** da diretoria atravé
 ### Custo atual do meu projeto <br>
 este foi o custo atual do projeto para 7 dias de execução
 
-![x](file:///C:/Users/Usu%C3%A1rio/Documents/01_Ag_Abobora_Digital/OpenCode/novaDrive/docs/dahsboard%20clientes.JPG)
+<img src="img/custo atual.JPG" alt="Custo atual para 7 dias de projeto"/>
+
 
 ---
 
@@ -174,7 +175,7 @@ A `gold.vw_fato_completa` realiza todos os 5 JOINs e expõe todas as colunas em 
 
 ---
 
-## Dashboards (Looker Studio)
+## Dashboards (Looker Studio) --> <a href="https://datastudio.google.com/reporting/07111107-03eb-4628-a233-9bbf6709d133" target="_blank">Acesso ao looker mvp versão 01</a>
 
 O projeto responde a **7 perguntas de negócio** da diretoria através de **5 dashboards** com cross-filtering entre todos os gráficos:
 
@@ -185,7 +186,7 @@ Quais modelos são mais vendidos?
 **Métricas:** Faturamento total, total de vendas, ticket médio, desconto médio, clientes atendidos, modelos mais vendidos  
 **Gráficos:** 5 scorecards + série temporal de faturamento + donut por concessionária + barras de modelos
 
-![My Screenshot](file:///C:/Users/Usu%C3%A1rio/Documents/01_Ag_Abobora_Digital/OpenCode/novaDrive/docs/dahsboard%20clientes.JPG)
+<img src="img/Dashboard Executivo.JPG" alt="Dashboard Executivo para concessionárias">
 
 ### 2. Dashboard Comercial
 **Perguntas:** <br>
@@ -194,11 +195,16 @@ Existe concentração excessiva em poucos vendedores?
 **Métricas:** Vendedores ativos, meta vs realizado, ticket médio por vendedor, desconto médio, performance (destaque/bom/atenção)  
 **Gráficos:** Gauge de meta + barras de ticket por vendedor + tabela de performance com badges + barras de desconto
 
+<img src="img/Dashboard Comercial.JPG" alt="Dashboard Comercial para concessionárias"/>
+
+
 ### 3. Dashboard Clientes
 **Perguntas:** <br>
 Quem são os clientes mais valiosos?  
 **Métricas:** Total de clientes, ticket médio por cliente, cliente top 1 (gasto total), clientes recorrentes  
 **Gráficos:** 4 scorecards + barras top 10 clientes + donut por faixa de gasto + área empilhada recorrentes vs novos
+
+<img src="img/Dashboard Clientes.JPG" alt="Dashboard de Clientes para concessionárias"/>
 
 ### 4. Dashboard Regional
 **Perguntas:** <br>
@@ -207,10 +213,14 @@ Existe concentração excessiva em poucas regiões?
 **Métricas:** Estados atendidos, cidades atendidas, faturamento top 1 estado, concentração top 3 estados  
 **Gráficos:** 4 scorecards + treemap por estado + barras por cidade + série temporal por estado + tabela detalhada
 
+<img src="img/Dashboard Regional.JPG" alt="Dashboard Regional para concessionárias"/>
+
 ### 5. Dashboard Temporal
 **Perguntas:** Como evolui o faturamento?  
 **Métricas:** Faturamento do mês, YTD, meta anual, safra (mês mais rentável)  
 **Gráficos:** 4 scorecards + barras mensais vs meta + ranking de safra + progressão YTD + YoY
+
+<img src="img/Dashboard Temporal.JPG" alt="Dashboard Temporal para concessionárias"/>
 
 ### Cross-filtering
 
@@ -220,13 +230,28 @@ Qualquer filtro aplicado (cidade, mês, vendedor, concessionária) propaga autom
 
 ---
 
-## Análise complementar 
+## Análise complementar --> <a href="https://colab.research.google.com/drive/1b8zQJmHxbEz1vRxqSmvdNDs-ua36QsPe?usp=sharing" target="_blank">Acesso da análise</a>
 Essa análise tem objetivo de complementar o dash com dados mais complexos que podem ser feitos de forma mensal, trimestral ou semestral, obetivo é gerar análises passadas detalhadas para determinar se existem padrões e também analises de predição futuras ( forecast ) para dar um norte de crescimento baseado em dados para o futuro.
 
 ### Forecast
-![My Screenshot](file:///C:/Users/Usu%C3%A1rio/Documents/01_Ag_Abobora_Digital/OpenCode/novaDrive/docs/dahsboard%20clientes.JPG)
 
-objetivo: lorem ipsum lorem
+<img src="img/Faturamento Mensal 2025 vs. Forecast e Cenários.png" alt="Análise Forecast sobre faturamento anual">
+
+objetivo: Auxilia na alocação de orçamentos, contratações de equipes e reposição de estoques, evitando faltas ou excessos.
+
+### Melhores meses do ano para investir
+
+<img src="img/Faturamento Real Mensal 2025 por Categoria.png" alt="Análise sobre os melhores meses do ano para investir">
+
+objetivo: descobrir por meio de dados se existem melhores épocas de vendas ao longo do ano para que possamos alocar melhor nossas campanhas
+de performance
+
+### Melhores dias da semana ao longo do ano para investir
+
+<img src="img/Heatmap de Faturamento Real por Dia da Semana e Mês (2025).png" alt="Análise sobre os melhores dias da semana para investir">
+
+objetivo: descobrir por meio de dados se existem melhores épocas de vendas ao longo do ano para que possamos alocar melhor nossas campanhas
+de performance
 
 ---
 
