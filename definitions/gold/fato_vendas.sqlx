@@ -1,0 +1,23 @@
+config {
+  type: "table",
+  schema: "gold",
+  description: "Fato vendas - tabela central do modelo estrela com métricas e chaves para todas as dimensões",
+  tags: ["gold", "fact"]
+}
+
+SELECT
+  id_vendas                                               AS id_venda,
+  id_clientes                                             AS id_cliente,
+  id_veiculos                                             AS id_veiculo,
+  id_vendedores                                           AS id_vendedor,
+  id_concessionarias                                      AS id_concessionaria,
+  data_venda                                              AS id_tempo,
+  valor_pago,
+  valor_desconto,
+  percentual_desconto,
+  ROUND(valor_pago / NULLIF(quantidade_venda, 0), 2)      AS ticket_medio,
+  quantidade_venda,
+  faixa_preco,
+  venda_com_desconto,
+  categoria_desconto
+FROM silver.fato_vendas_enriquecida

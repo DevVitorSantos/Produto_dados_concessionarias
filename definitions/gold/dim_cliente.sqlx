@@ -1,0 +1,13 @@
+config {
+  type: "table",
+  schema: "gold",
+  description: "Dimensão clientes - dados cadastrais para análises de clientes",
+  tags: ["gold", "dimension"]
+}
+
+SELECT
+  id_clientes           AS id_cliente,
+  cliente,
+  endereco,
+  id_concessionarias    AS id_concessionaria
+FROM silver.dim_clientes

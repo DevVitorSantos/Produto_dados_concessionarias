@@ -1,0 +1,14 @@
+config {
+  type: "table",
+  schema: "gold",
+  description: "Dimensão concessionárias - dados com localização geográfica",
+  tags: ["gold", "dimension"]
+}
+
+SELECT
+  id_concessionarias    AS id_concessionaria,
+  concessionaria,
+  cidade,
+  estado,
+  sigla                 AS uf
+FROM silver.dim_concessionarias

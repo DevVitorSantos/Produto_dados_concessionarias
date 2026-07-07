@@ -1,0 +1,33 @@
+config {
+  type: "table",
+  schema: "silver",
+  description: "Dimensão calendário - gerada de 2020 a 2030 com atributos temporais em português",
+  tags: ["silver", "dimension"]
+}
+
+SELECT
+  data,
+  EXTRACT(YEAR FROM data) AS ano,
+  EXTRACT(QUARTER FROM data) AS trimestre,
+  EXTRACT(MONTH FROM data) AS mes,
+  CASE EXTRACT(MONTH FROM data)
+    WHEN 1 THEN 'Janeiro' WHEN 2 THEN 'Fevereiro' WHEN 3 THEN 'Março'
+    WHEN 4 THEN 'Abril' WHEN 5 THEN 'Maio' WHEN 6 THEN 'Junho'
+    WHEN 7 THEN 'Julho' WHEN 8 THEN 'Agosto' WHEN 9 THEN 'Setembro'
+    WHEN 10 THEN 'Outubro' WHEN 11 THEN 'Novembro' WHEN 12 THEN 'Dezembro'
+  END AS nome_mes,
+  DATE_TRUNC(data, MONTH) AS ano_mes,
+  FORMAT_DATE('%Y-%m', data) AS ano_mes_texto,
+  EXTRACT(WEEK FROM data) AS semana,
+  EXTRACT(DAY FROM data) AS dia,
+  EXTRACT(DAYOFYEAR FROM data) AS dia_ano,
+  EXTRACT(DAYOFWEEK FROM data) AS numero_dia_semana,
+  CASE EXTRACT(DAYOFWEEK FROM data)
+    WHEN 1 THEN 'Domingo' WHEN 2 THEN 'Segunda' WHEN 3 THEN 'Terça'
+    WHEN 4 THEN 'Quarta' WHEN 5 THEN 'Quinta' WHEN 6 THEN 'Sexta'
+    WHEN 7 THEN 'Sábado'
+  END AS nome_dia_semana,
+  EXTRACT(DAYOFWEEK FROM data) IN (1, 7) AS fim_de_semana,
+  EXTRACT(DAYOFWEEK FROM data) NOT IN (1, 7) AS dia_util,
+  CURRENT_TIMESTAMP() AS data_processamento
+FROM UNNEST(GENERATE_DATE_ARRAY('2020-01-01', '2030-12-31')) AS data

@@ -1,0 +1,21 @@
+config {
+  type: "table",
+  schema: "silver",
+  description: "Dimensão concessionárias - enriquecida com cidade e estado",
+  tags: ["silver", "dimension"]
+}
+
+SELECT
+  c.id_concessionarias,
+  c.concessionaria,
+  c.id_cidades,
+  ci.cidade,
+  ci.id_estados,
+  e.estado,
+  e.sigla,
+  c.data_inclusao,
+  c.data_atualizacao,
+  CURRENT_TIMESTAMP() AS data_processamento
+FROM bronze.concessionarias c
+LEFT JOIN bronze.cidades ci ON c.id_cidades = ci.id_cidades
+LEFT JOIN bronze.estados e ON ci.id_estados = e.id_estados

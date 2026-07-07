@@ -1,0 +1,13 @@
+config {
+  type: "table",
+  schema: "gold",
+  description: "Dimensão veículos - modelos, tipos e valores",
+  tags: ["gold", "dimension"]
+}
+
+SELECT
+  id_veiculos           AS id_veiculo,
+  modelo,
+  tipo,
+  valor_tabela
+FROM silver.dim_veiculos

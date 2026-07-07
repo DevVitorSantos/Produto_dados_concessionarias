@@ -1,0 +1,52 @@
+config {
+  type: "view",
+  schema: "gold",
+  description: "View única com todos os JOINs do modelo estrela — para conectar no Looker Studio sem precisar de Blend",
+  tags: ["gold", "view", "looker-studio"]
+}
+
+SELECT
+  f.id_venda,
+  f.id_cliente,
+  f.id_veiculo,
+  f.id_vendedor,
+  f.id_concessionaria,
+  f.id_tempo,
+  f.valor_pago,
+  f.valor_desconto,
+  f.percentual_desconto,
+  f.ticket_medio,
+  f.quantidade_venda,
+  f.faixa_preco,
+  f.venda_com_desconto,
+  f.categoria_desconto,
+  t.data,
+  t.ano,
+  t.semestre,
+  t.trimestre,
+  t.mes,
+  t.nome_mes,
+  t.ano_mes,
+  t.ano_mes_texto,
+  t.semana,
+  t.dia,
+  t.numero_dia_semana,
+  t.nome_dia_semana,
+  t.fim_de_semana,
+  t.dia_util,
+  c.cliente,
+  c.endereco,
+  v.modelo,
+  v.tipo,
+  v.valor_tabela,
+  vd.vendedor,
+  cx.concessionaria,
+  cx.cidade,
+  cx.estado,
+  cx.uf
+FROM gold.fato_vendas f
+LEFT JOIN gold.dim_tempo t          ON f.id_tempo          = t.id_tempo
+LEFT JOIN gold.dim_cliente c        ON f.id_cliente        = c.id_cliente
+LEFT JOIN gold.dim_veiculo v        ON f.id_veiculo        = v.id_veiculo
+LEFT JOIN gold.dim_vendedor vd      ON f.id_vendedor       = vd.id_vendedor
+LEFT JOIN gold.dim_concessionaria cx ON f.id_concessionaria = cx.id_concessionaria

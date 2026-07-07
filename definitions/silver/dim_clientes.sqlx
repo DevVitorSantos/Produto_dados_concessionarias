@@ -1,0 +1,16 @@
+config {
+  type: "table",
+  schema: "silver",
+  description: "Dimensão clientes - limpeza e padronização dos dados cadastrais",
+  tags: ["silver", "dimension"]
+}
+
+SELECT
+  id_clientes,
+  cliente,
+  endereco,
+  id_concessionarias,
+  data_inclusao,
+  data_atualizacao,
+  CURRENT_TIMESTAMP() AS data_processamento
+FROM bronze.clientes

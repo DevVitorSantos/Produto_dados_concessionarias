@@ -1,0 +1,25 @@
+config {
+  type: "table",
+  schema: "gold",
+  description: "Dimensão tempo - calendário para análises temporais nos dashboards",
+  tags: ["gold", "dimension"]
+}
+
+SELECT
+  data                                          AS id_tempo,
+  data,
+  ano,
+  CASE WHEN mes BETWEEN 1 AND 6 THEN 1 ELSE 2 END AS semestre,
+  trimestre,
+  mes,
+  nome_mes,
+  ano_mes,
+  ano_mes_texto,
+  semana,
+  dia,
+  dia_ano,
+  numero_dia_semana,
+  nome_dia_semana,
+  fim_de_semana,
+  dia_util
+FROM silver.dim_calendario

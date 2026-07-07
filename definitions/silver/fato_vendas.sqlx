@@ -1,0 +1,19 @@
+config {
+  type: "table",
+  schema: "silver",
+  description: "Fato vendas - dados limpos e tipados das vendas brutas",
+  tags: ["silver", "fact"]
+}
+
+SELECT
+  id_vendas,
+  id_clientes,
+  id_veiculos,
+  id_vendedores,
+  id_concessionarias,
+  CAST(valor_pago AS NUMERIC) AS valor_pago,
+  CAST(data_venda AS DATE) AS data_venda,
+  data_inclusao,
+  data_atualizacao,
+  CURRENT_TIMESTAMP() AS data_processamento
+FROM bronze.vendas

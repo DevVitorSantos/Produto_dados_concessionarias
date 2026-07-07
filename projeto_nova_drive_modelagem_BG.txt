@@ -1,0 +1,142 @@
+# Apresentação do meu projeto de dados:
+
+## O que eu preciso:
+Quero uma modelagem no formato estrela na camada gold, me propiciando criar dashboards que visem
+responder as perguntas de negócio feitas pela diretoria separando em 5 dashboards específicos:
+
+1 - Dashboard Executivo
+2 - Dashboard Comercial
+3 - Dashboard Clientes
+4 - Dashboard Regional
+5 - Dashboard Temporal
+
+sendo que por exemplo no dashboard executivo quero poder adicionar métricas e ao aplicar por exemplo
+um filtro de cidade, meses ou vendedor, que todos os gráficos sejam afetados pelos filtros.
+
+
+
+
+## métricas que quero atender no dashboard consequentemente na camada gold
+
+**dashboard executivo**
+
+ - faturamento total
+ - total de vendas
+ - ticket medio
+ - desconto médio
+ - clientes atendidos
+ - modelos mais vendidos
+
+dashboard comercial
+
+ - vendedor ativo
+ - meta de venda ( mes )
+ - ticket médio por vendedor
+ - desconto médio concedido
+ - distribuicao de vendas por concessionaria
+ - Performance ( destaque, bom, atencao )
+
+dashboard clientes
+
+ - total de clientes
+ - ticket médio por cliente
+ - cliente top 1 ( gasto total ) 
+ - clientes recorrentes
+
+dashboard regional
+
+ - estados atendidos
+ - cidades atendidas
+ - faturamento por estado top 1
+ - concentracao do top 3 estados ( participacao no faturamento )
+
+dashboard temporal
+
+ - faturamento do mes
+ - faturamento yTD
+ - meta anual
+ - safra ( mes+ rentavel )
+
+
+## Tecnologias utilizadas
+
+projeto hoje está sendo criado na plataforma google GCP, utilizando banco de dados big query
+e dataform para ELT, ou seja para criação da tabela gold preciso dos códigos sql para utilizar
+no dataform e looker studio
+
+## Perguntas de negócio feitas pela diretoria, comercial, executiva, etc
+
+1. Qual concessionária está gerando mais faturamento e volume de vendas?
+2. Quais modelos de veículos são os mais vendidos e mais rentáveis?
+3. Quem são os vendedores com melhor desempenho?
+4. Como está evoluindo o faturamento da empresa ao longo do tempo?
+5. Quais estados e cidades possuem maior potencial de mercado?
+6. Quem são os clientes mais valiosos da empresa?
+7. Existe concentração excessiva de vendas em poucos vendedores ou concessionárias?
+
+## Modelagem de dados
+
+**camada bronze ( raw ) **
+
+- bronze.clientes
+- bronze.vendas
+- bronze.veiculos
+- bronze.vendedores
+- bronze.concessionarias
+- bronze.cidades
+- bronze.estados
+- bronze.customers
+
+
+
+**schema tabela bronze**
+
+table_schema,table_name,column_name,data_type
+bronze,vendas,id_vendas,INT64
+bronze,vendas,id_veiculos,INT64
+bronze,vendas,id_concessionarias,INT64
+bronze,vendas,id_vendedores,INT64
+bronze,vendas,id_clientes,INT64
+bronze,vendas,valor_pago,FLOAT64
+bronze,vendas,data_venda,TIMESTAMP
+bronze,vendas,data_inclusao,TIMESTAMP
+bronze,vendas,data_atualizacao,TIMESTAMP
+bronze,cidades,id_cidades,INT64
+bronze,cidades,cidade,STRING
+bronze,cidades,id_estados,INT64
+bronze,cidades,data_inclusao,TIMESTAMP
+bronze,cidades,data_atualizacao,TIMESTAMP
+bronze,compradores,comprador_nome,STRING
+bronze,veiculos,id_veiculos,INT64
+bronze,veiculos,nome,STRING
+bronze,veiculos,tipo,STRING
+bronze,veiculos,valor,FLOAT64
+bronze,veiculos,data_atualizacao,TIMESTAMP
+bronze,veiculos,data_inclusao,TIMESTAMP
+bronze,vendedores,id_vendedores,INT64
+bronze,vendedores,nome,STRING
+bronze,vendedores,id_concessionarias,INT64
+bronze,vendedores,data_inclusao,TIMESTAMP
+bronze,vendedores,data_atualizacao,TIMESTAMP
+bronze,concessionarias,id_concessionarias,INT64
+bronze,concessionarias,concessionaria,STRING
+bronze,concessionarias,id_cidades,INT64
+bronze,concessionarias,data_inclusao,TIMESTAMP
+bronze,concessionarias,data_atualizacao,TIMESTAMP
+bronze,estados,id_estados,INT64
+bronze,estados,estado,STRING
+bronze,estados,sigla,STRING
+bronze,estados,data_inclusao,TIMESTAMP
+bronze,estados,data_atualizacao,TIMESTAMP
+bronze,clientes,id_clientes,INT64
+bronze,clientes,cliente,STRING
+bronze,clientes,endereco,STRING
+bronze,clientes,id_concessionarias,INT64
+bronze,clientes,data_inclusao,TIMESTAMP
+bronze,clientes,data_atualizacao,TIMESTAMP
+
+
+
+
+## modelagem para tabela gold
+	Modelo Estrela na Gold

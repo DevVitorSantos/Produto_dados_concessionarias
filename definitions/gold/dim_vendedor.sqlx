@@ -1,0 +1,12 @@
+config {
+  type: "table",
+  schema: "gold",
+  description: "Dimensão vendedores - dados dos vendedores",
+  tags: ["gold", "dimension"]
+}
+
+SELECT
+  id_vendedores         AS id_vendedor,
+  vendedor,
+  id_concessionarias    AS id_concessionaria
+FROM silver.dim_vendedores

@@ -1,0 +1,16 @@
+config {
+  type: "table",
+  schema: "silver",
+  description: "Dimensão veículos - padronização de nomes e tipos numéricos",
+  tags: ["silver", "dimension"]
+}
+
+SELECT
+  id_veiculos,
+  nome AS modelo,
+  tipo,
+  CAST(valor AS NUMERIC) AS valor_tabela,
+  data_inclusao,
+  data_atualizacao,
+  CURRENT_TIMESTAMP() AS data_processamento
+FROM bronze.veiculos

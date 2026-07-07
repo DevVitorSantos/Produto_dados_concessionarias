@@ -1,0 +1,66 @@
+config {
+  type: "table",
+  schema: "silver",
+  description: "Fato vendas enriquecida - vendas com todos os atributos das dimensões e métricas calculadas (desconto, faixa preço, ticket)",
+  tags: ["silver", "fact"]
+}
+
+SELECT
+  fv.id_vendas,
+  fv.id_clientes,
+  fv.id_vendedores,
+  fv.id_veiculos,
+  fv.id_concessionarias,
+  dc.data AS id_calendario,
+  dc.data,
+  fv.data_venda,
+  dc.ano,
+  CASE WHEN dc.mes BETWEEN 1 AND 6 THEN 1 ELSE 2 END AS semestre,
+  dc.trimestre,
+  dc.mes,
+  dc.nome_mes,
+  dc.ano_mes_texto AS ano_mes,
+  dc.semana,
+  dc.dia,
+  dc.numero_dia_semana,
+  dc.nome_dia_semana,
+  dc.dia_util,
+  dc.fim_de_semana,
+  cl.cliente,
+  cl.endereco,
+  v.modelo,
+  v.tipo,
+  v.valor_tabela,
+  vd.vendedor,
+  c.concessionaria,
+  c.cidade,
+  c.estado,
+  c.sigla,
+  fv.valor_pago,
+  GREATEST(v.valor_tabela - fv.valor_pago, 0) AS valor_desconto,
+  ROUND(SAFE_DIVIDE(GREATEST(v.valor_tabela - fv.valor_pago, 0), v.valor_tabela) * 100, 2) AS percentual_desconto,
+  ROUND(SAFE_DIVIDE(fv.valor_pago, v.valor_tabela) * 100, 2) AS percentual_pago,
+  1 AS quantidade_venda,
+  fv.valor_pago AS ticket,
+  CASE
+    WHEN fv.valor_pago >= 100000 THEN 'Premium'
+    WHEN fv.valor_pago >= 50000 THEN 'Alto Padrão'
+    WHEN fv.valor_pago >= 30000 THEN 'Padrão'
+    ELSE 'Popular'
+  END AS faixa_preco,
+  CASE WHEN v.valor_tabela > fv.valor_pago THEN 1 ELSE 0 END AS venda_com_desconto,
+  CASE
+    WHEN v.valor_tabela <= fv.valor_pago THEN 'Sem Desconto'
+    WHEN SAFE_DIVIDE(v.valor_tabela - fv.valor_pago, v.valor_tabela) <= 0.05 THEN 'Desconto Leve'
+    WHEN SAFE_DIVIDE(v.valor_tabela - fv.valor_pago, v.valor_tabela) <= 0.10 THEN 'Desconto Moderado'
+    ELSE 'Desconto Agressivo'
+  END AS categoria_desconto,
+  CURRENT_TIMESTAMP() AS data_inclusao,
+  CURRENT_TIMESTAMP() AS data_atualizacao,
+  CURRENT_TIMESTAMP() AS data_processamento
+FROM silver.fato_vendas fv
+LEFT JOIN silver.dim_clientes cl ON fv.id_clientes = cl.id_clientes
+LEFT JOIN silver.dim_veiculos v ON fv.id_veiculos = v.id_veiculos
+LEFT JOIN silver.dim_vendedores vd ON fv.id_vendedores = vd.id_vendedores
+LEFT JOIN silver.dim_concessionarias c ON fv.id_concessionarias = c.id_concessionarias
+LEFT JOIN silver.dim_calendario dc ON fv.data_venda = dc.data

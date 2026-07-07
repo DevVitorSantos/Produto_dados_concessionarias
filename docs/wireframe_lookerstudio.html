@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Drive - Wireframe Looker Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+body{background:#e8eaed;color:#202124;font-size:13px;line-height:1.5;overflow-x:hidden}
+
+/* Looker Studio chrome */
+.ls-chrome{background:#fff;border-bottom:1px solid #dadce0;position:sticky;top:0;z-index:100}
+.ls-toolbar{display:flex;align-items:center;padding:0 16px;height:56px;gap:12px}
+.ls-logo{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:500;color:#1967d2;white-space:nowrap}
+.ls-logo svg{width:28px;height:28px}
+.ls-logo span{color:#5f6368;font-weight:400}
+.ls-divider{width:1px;height:28px;background:#dadce0;flex-shrink:0}
+.ls-title{font-size:14px;font-weight:500;color:#202124;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ls-actions{display:flex;align-items:center;gap:8px}
+.ls-btn{display:flex;align-items:center;gap:6px;padding:6px 16px;border:1px solid #dadce0;border-radius:4px;background:#fff;color:#3c4043;font-size:13px;cursor:default;transition:.15s}
+.ls-btn-primary{background:#1967d2;border-color:#1967d2;color:#fff}
+.ls-btn:hover{background:#f8f9fa}
+.ls-btn-primary:hover{background:#1557b0}
+.ls-avatar{width:32px;height:32px;border-radius:50%;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;cursor:default}
+
+/* Tabs (report pages) */
+.ls-pages{display:flex;align-items:center;padding:0 16px;background:#f8f9fa;border-bottom:1px solid #dadce0;overflow-x:auto;gap:2px}
+.ls-page{display:flex;align-items:center;gap:6px;padding:8px 16px;font-size:13px;color:#5f6368;cursor:default;border-bottom:2px solid transparent;white-space:nowrap;transition:.15s}
+.ls-page:hover{color:#202124;background:#e8eaed}
+.ls-page.active{color:#1967d2;border-bottom-color:#1967d2;font-weight:500}
+.ls-page .icon{font-size:16px}
+
+/* Canvas */
+.ls-canvas{max-width:1280px;margin:20px auto;padding:0 20px}
+
+/* Filter bar */
+.ls-filters{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#fff;border:1px solid #dadce0;border-radius:8px;margin-bottom:20px;flex-wrap:wrap}
+.ls-filters .label{font-size:12px;color:#5f6368;font-weight:500;margin-right:4px}
+.ls-fctrl{display:flex;align-items:center;gap:6px;background:#f8f9fa;border:1px solid #dadce0;border-radius:4px;padding:4px 10px;font-size:13px;color:#202124;cursor:default}
+.ls-fctrl .arrow{color:#5f6368;font-size:10px;margin-left:4px}
+.ls-date-range{display:flex;align-items:center;gap:4px;background:#f8f9fa;border:1px solid #dadce0;border-radius:4px;padding:4px 10px;font-size:13px;color:#202124;cursor:default}
+
+/* Chart grid */
+.ls-grid{display:grid;gap:16px}
+.ls-grid.g5{grid-template-columns:repeat(5,1fr)}
+.ls-grid.g4{grid-template-columns:repeat(4,1fr)}
+.ls-grid.g3{grid-template-columns:repeat(3,1fr)}
+.ls-grid.g2{grid-template-columns:1fr 1fr}
+.ls-grid.g13{grid-template-columns:1.3fr 1fr}
+.ls-grid.g31{grid-template-columns:1fr 1.3fr}
+
+/* Chart card */
+.ls-chart{background:#fff;border:1px solid #dadce0;border-radius:8px;overflow:hidden;transition:box-shadow .15s}
+.ls-chart:hover{box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.ls-chart-head{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #f0f0f0}
+.ls-chart-head h3{font-size:13px;font-weight:500;color:#3c4043;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ls-chart-head .menu{color:#5f6368;font-size:16px;cursor:default;padding:2px;border-radius:4px;line-height:1}
+.ls-chart-head .menu:hover{background:#f1f3f4}
+.ls-chart-body{padding:12px}
+
+/* Scorecard */
+.scorecard{text-align:center;padding:8px 0}
+.scorecard .val{font-size:28px;font-weight:600;color:#202124;letter-spacing:-.5px}
+.scorecard .sub{font-size:12px;color:#5f6368;margin-top:2px}
+.scorecard .trend{font-size:11px;margin-top:4px}
+.scorecard .trend.up{color:#1e8e3e}
+.scorecard .trend.down{color:#d93025}
+.scorecard .label{font-size:11px;color:#5f6368;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+
+/* Bar chart (Looker style) */
+.ls-bar{display:flex;flex-direction:column;gap:5px}
+.ls-bar-row{display:flex;align-items:center;gap:8px}
+.ls-bar-row .lbl{width:80px;font-size:12px;color:#5f6368;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
+.ls-bar-row .track{flex:1;height:20px;background:#f1f3f4;border-radius:4px;overflow:hidden}
+.ls-bar-row .fill{height:100%;border-radius:4px;transition:width .3s;min-width:4px}
+.ls-bar-row .rval{font-size:12px;color:#3c4043;width:60px;flex-shrink:0;text-align:right}
+.ls-bar-row .pct{font-size:11px;color:#5f6368;width:32px;flex-shrink:0;text-align:right}
+
+/* Horizontal grouped bar */
+.ls-hbar{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+.ls-hbar .lbl{width:72px;font-size:12px;color:#5f6368;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
+.ls-hbar .track{flex:1;height:16px;background:#f1f3f4;border-radius:3px;overflow:hidden}
+.ls-hbar .fill{height:100%;border-radius:3px}
+.ls-hbar .rval{width:50px;font-size:12px;color:#3c4043;flex-shrink:0;text-align:right}
+
+/* Time series (Looker style columns) */
+.ls-ts{display:flex;align-items:flex-end;gap:2px;height:140px;padding:8px 0;position:relative}
+.ls-ts .col{flex:1;display:flex;flex-direction:column;align-items:center;min-width:0}
+.ls-ts .col .pill{width:100%;border-radius:3px 3px 0 0;background:#1967d2;transition:height .3s;min-height:2px}
+.ls-ts .col .pill.alt{background:#ea8600}
+.ls-ts .col .xlabel{font-size:10px;color:#5f6368;margin-top:4px}
+.ls-ts .ref{position:absolute;left:0;right:0;border-top:1px dashed #d93025;opacity:.6;font-size:10px;color:#d93025;padding-left:4px}
+
+/* Donut */
+.ls-donut{display:flex;align-items:center;gap:20px}
+.ls-donut .ring{width:120px;height:120px;border-radius:50%;flex-shrink:0}
+.ls-donut .legend{flex:1;font-size:12px}
+.ls-donut .legend .item{display:flex;align-items:center;gap:8px;padding:3px 0}
+.ls-donut .legend .dot{width:10px;height:10px;border-radius:4px;flex-shrink:0}
+.ls-donut .legend .p{color:#5f6368;margin-left:auto}
+
+/* Treemap */
+.ls-tree{display:grid;grid-template-columns:1.5fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;height:170px}
+.ls-tree .blk{border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:600;position:relative}
+.ls-tree .blk .pct{font-size:11px;font-weight:400;opacity:.8}
+.ls-tree .tall{grid-row:span 2}
+
+/* Table */
+.ls-table{width:100%;border-collapse:collapse;font-size:12px}
+.ls-table th{padding:6px 8px;border-bottom:2px solid #e8eaed;color:#5f6368;font-weight:500;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+.ls-table td{padding:6px 8px;border-bottom:1px solid #f1f3f4;color:#3c4043}
+.ls-table tr:last-child td{border:none}
+.ls-table .spark{display:inline-block;width:50px;height:3px;border-radius:2px;overflow:hidden;vertical-align:middle;margin-right:6px}
+
+/* Gauge */
+.ls-gauge{text-align:center;padding:4px 0}
+.ls-gauge .g-ring{width:100px;height:100px;border-radius:50%;margin:0 auto 8px;position:relative;display:flex;align-items:center;justify-content:center}
+.ls-gauge .g-ring .inner{width:78px;height:78px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ls-gauge .g-ring .inner .v{font-size:22px;font-weight:700;color:#202124}
+.ls-gauge .g-ring .inner .l{font-size:10px;color:#5f6368}
+.ls-gauge .meta-row{display:flex;justify-content:center;gap:16px;font-size:12px;color:#5f6368}
+
+/* KPI row inside a bigger card */
+.ls-kpis{display:flex;gap:0;margin-bottom:4px}
+.ls-kpi{flex:1;text-align:center;padding:6px 4px}
+.ls-kpi .v{font-size:20px;font-weight:600;color:#202124}
+.ls-kpi .l{font-size:11px;color:#5f6368;margin-top:1px}
+.ls-kpi+.ls-kpi{border-left:1px solid #f1f3f4}
+
+/* Progress bar */
+.ls-progress{height:24px;background:#f1f3f4;border-radius:12px;overflow:hidden;margin:6px 0}
+.ls-progress .fill{height:100%;border-radius:12px;background:linear-gradient(90deg,#1967d2,#1557b0);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600}
+
+/* Badge */
+.ls-badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:500}
+.ls-badge.star{background:#e6f4ea;color:#1e8e3e}
+.ls-badge.good{background:#e8f0fe;color:#1967d2}
+.ls-badge.warn{background:#fef7e0;color:#e37400}
+.ls-badge.crit{background:#fce8e6;color:#d93025}
+
+/* Responsive */
+@media(max-width:900px){
+  .ls-grid.g5{grid-template-columns:repeat(3,1fr)}
+  .ls-grid.g4{grid-template-columns:repeat(2,1fr)}
+  .ls-grid.g2,.ls-grid.g13,.ls-grid.g31{grid-template-columns:1fr}
+  .ls-toolbar{gap:6px}
+  .ls-title{font-size:12px}
+}
+@media(max-width:600px){
+  .ls-grid.g5{grid-template-columns:repeat(2,1fr)}
+  .ls-grid.g4,.ls-grid.g3{grid-template-columns:1fr 1fr}
+  .ls-canvas{padding:0 10px}
+  .ls-pages{overflow-x:auto}
+}
+
+/* reset active page styles */
+.page-content{display:none}
+.page-content.active{display:block}
+</style>
+</head>
+<body>
+
+<!-- ── Looker Studio Chrome ── -->
+<div class="ls-chrome">
+  <div class="ls-toolbar">
+    <div class="ls-logo">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7v10l10 5 10-5V7L12 2z" fill="#1967d2"/><path d="M12 12l-7-3.5 7-3.5 7 3.5-7 3.5z" fill="#4285f4"/><path d="M5 14.5l7 3.5 7-3.5" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+      Nova Drive <span>• Looker Studio</span>
+    </div>
+    <div class="ls-divider"></div>
+    <div class="ls-title">Wireframe — Dashboards Executivo, Comercial, Clientes, Regional, Temporal</div>
+    <div class="ls-actions">
+      <span class="ls-btn">⋮</span>
+      <span class="ls-btn">✕ Editar</span>
+      <span class="ls-btn ls-btn-primary">▶ Ver</span>
+      <span class="ls-avatar">U</span>
+    </div>
+  </div>
+  <div class="ls-pages">
+    <div class="ls-page active" data-page="executivo"><span class="icon">📊</span> Executivo</div>
+    <div class="ls-page" data-page="comercial"><span class="icon">💼</span> Comercial</div>
+    <div class="ls-page" data-page="clientes"><span class="icon">👤</span> Clientes</div>
+    <div class="ls-page" data-page="regional"><span class="icon">🌍</span> Regional</div>
+    <div class="ls-page" data-page="temporal"><span class="icon">📅</span> Temporal</div>
+  </div>
+</div>
+
+<div class="ls-canvas">
+
+<!-- ================================================================ -->
+<!--  PAGE 1 - EXECUTIVO                                               -->
+<!-- ================================================================ -->
+<div class="page-content active" id="page-executivo">
+  <div class="ls-filters">
+    <span class="label">Filtros:</span>
+    <span class="ls-fctrl">Cidade: Todas <span class="arrow">▾</span></span>
+    <span class="ls-fctrl">Mês: Últimos 12 meses <span class="arrow">▾</span></span>
+    <span class="ls-fctrl">Vendedor: Todos <span class="arrow">▾</span></span>
+    <span class="ls-date-range">📅 01/07/2025 – 30/06/2026</span>
+  </div>
+  <div class="ls-grid g5">
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Faturamento Total</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Acumulado</div><div class="val">R$ 2,4M</div><div class="trend up">▲ 12,5% vs período anterior</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Total de Vendas</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Unidades</div><div class="val">156</div><div class="trend up">▲ 8,3% vs período anterior</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Ticket Médio</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Valor por venda</div><div class="val">R$ 15,4K</div><div class="trend up">▲ 3,8% vs período anterior</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Desconto Médio</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">% por venda</div><div class="val">4,2%</div><div class="trend down">▼ 0,5 pp vs período anterior</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Clientes Atendidos</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Únicos</div><div class="val">1.020</div><div class="trend up">▲ 5,1% vs período anterior</div></div></div></div>
+  </div>
+  <div class="ls-grid g2">
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Faturamento ao Longo do Tempo</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-ts">
+          <div class="ref" style="bottom:60%">Meta mensal</div>
+          <div class="col"><div class="pill" style="height:32%"></div><span class="xlabel">Jan</span></div>
+          <div class="col"><div class="pill" style="height:40%"></div><span class="xlabel">Fev</span></div>
+          <div class="col"><div class="pill" style="height:36%"></div><span class="xlabel">Mar</span></div>
+          <div class="col"><div class="pill" style="height:52%"></div><span class="xlabel">Abr</span></div>
+          <div class="col"><div class="pill" style="height:46%"></div><span class="xlabel">Mai</span></div>
+          <div class="col"><div class="pill" style="height:60%"></div><span class="xlabel">Jun</span></div>
+          <div class="col"><div class="pill" style="height:55%"></div><span class="xlabel">Jul</span></div>
+          <div class="col"><div class="pill" style="height:68%"></div><span class="xlabel">Ago</span></div>
+          <div class="col"><div class="pill" style="height:62%"></div><span class="xlabel">Set</span></div>
+          <div class="col"><div class="pill" style="height:78%"></div><span class="xlabel">Out</span></div>
+          <div class="col"><div class="pill" style="height:72%"></div><span class="xlabel">Nov</span></div>
+          <div class="col"><div class="pill" style="height:90%"></div><span class="xlabel">Dez</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Vendas por Concessionária</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-donut">
+          <div class="ring" style="background:conic-gradient(#1967d2 0deg 137deg,#ea8600 137deg 238deg,#34a853 238deg 310deg,#d93025 310deg 360deg)"></div>
+          <div class="legend">
+            <div class="item"><div class="dot" style="background:#1967d2"></div> Alpha <span class="p">38%</span></div>
+            <div class="item"><div class="dot" style="background:#ea8600"></div> Beta <span class="p">28%</span></div>
+            <div class="item"><div class="dot" style="background:#34a853"></div> Gamma <span class="p">20%</span></div>
+            <div class="item"><div class="dot" style="background:#d93025"></div> Delta <span class="p">14%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ls-grid g2">
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Modelos Mais Vendidos</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-bar">
+          <div class="ls-bar-row"><span class="lbl">HB20</span><div class="track"><div class="fill" style="width:90%;background:#1967d2"></div></div><span class="rval">45</span><span class="pct">29%</span></div>
+          <div class="ls-bar-row"><span class="lbl">Onix</span><div class="track"><div class="fill" style="width:76%;background:#4285f4"></div></div><span class="rval">38</span><span class="pct">24%</span></div>
+          <div class="ls-bar-row"><span class="lbl">Corolla</span><div class="track"><div class="fill" style="width:56%;background:#669df6"></div></div><span class="rval">28</span><span class="pct">18%</span></div>
+          <div class="ls-bar-row"><span class="lbl">Fiesta</span><div class="track"><div class="fill" style="width:40%;background:#8ab4f8"></div></div><span class="rval">20</span><span class="pct">13%</span></div>
+          <div class="ls-bar-row"><span class="lbl">Compass</span><div class="track"><div class="fill" style="width:30%;background:#aecbfa"></div></div><span class="rval">15</span><span class="pct">10%</span></div>
+          <div class="ls-bar-row"><span class="lbl">Outros</span><div class="track"><div class="fill" style="width:20%;background:#c6dafc"></div></div><span class="rval">10</span><span class="pct">6%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Faturamento por Modelo</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-bar">
+          <div class="ls-bar-row"><span class="lbl">Corolla</span><div class="track"><div class="fill" style="width:100%;background:#1967d2"></div></div><span class="rval">R$ 980K</span><span class="pct">41%</span></div>
+          <div class="ls-bar-row"><span class="lbl">Compass</span><div class="track"><div class="fill" style="width:65%;background:#4285f4"></div></div><span class="rval">R$ 520K</span><span class="pct">22%</span></div>
+          <div class="ls-bar-row"><span class="lbl">HB20</span><div class="track"><div class="fill" style="width:45%;background:#669df6"></div></div><span class="rval">R$ 360K</span><span class="pct">15%</span></div>
+          <div class="ls-bar-row"><span class="lbl">Onix</span><div class="track"><div class="fill" style="width:35%;background:#8ab4f8"></div></div><span class="rval">R$ 280K</span><span class="pct">12%</span></div>
+          <div class="ls-bar-row"><span class="lbl">Fiesta</span><div class="track"><div class="fill" style="width:25%;background:#aecbfa"></div></div><span class="rval">R$ 200K</span><span class="pct">8%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!--  PAGE 2 - COMERCIAL                                              -->
+<!-- ================================================================ -->
+<div class="page-content" id="page-comercial">
+  <div class="ls-filters">
+    <span class="label">Filtros:</span>
+    <span class="ls-fctrl">Mês: Junho/2026 <span class="arrow">▾</span></span>
+    <span class="ls-fctrl">Concessionária: Todas <span class="arrow">▾</span></span>
+  </div>
+  <div class="ls-grid g3">
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Vendedores Ativos</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">No mês</div><div class="val">23</div><div class="sub">de 25 cadastrados</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Meta do Mês</h3><span class="menu">⋮</span></div><div class="ls-chart-body">
+      <div class="ls-gauge">
+        <div class="g-ring" style="background:conic-gradient(#34a853 0deg 162deg,#fbbc04 162deg 234deg,#ea4335 234deg 360deg)"><div class="inner"><div class="v">90%</div><div class="l">atingido</div></div></div>
+        <div class="meta-row"><span>Meta: R$ 2,0M</span><span>Real: R$ 1,8M</span></div>
+      </div>
+    </div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Ticket Médio Geral</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Valor médio por venda</div><div class="val">R$ 15,4K</div><div class="sub">Maior: R$ 18,2K (Ana)</div></div></div></div>
+  </div>
+  <div class="ls-grid g13">
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Ticket Médio por Vendedor</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-bar">
+          <div class="ls-bar-row"><span class="lbl">Ana</span><div class="track"><div class="fill" style="width:100%;background:#1967d2"></div></div><span class="rval">R$ 18,2K</span></div>
+          <div class="ls-bar-row"><span class="lbl">João</span><div class="track"><div class="fill" style="width:85%;background:#4285f4"></div></div><span class="rval">R$ 16,8K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Carla</span><div class="track"><div class="fill" style="width:72%;background:#669df6"></div></div><span class="rval">R$ 14,5K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Pedro</span><div class="track"><div class="fill" style="width:60%;background:#8ab4f8"></div></div><span class="rval">R$ 12,3K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Lucas</span><div class="track"><div class="fill" style="width:48%;background:#aecbfa"></div></div><span class="rval">R$ 10,1K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Marina</span><div class="track"><div class="fill" style="width:38%;background:#c6dafc"></div></div><span class="rval">R$ 8,7K</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Performance dos Vendedores</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:60px;text-align:center;background:#f8f9fa;border-radius:6px;padding:8px"><div style="font-size:18px">⭐</div><div style="font-size:18px;font-weight:600;color:#202124">4</div><div style="font-size:10px;color:#5f6368">Destaque</div></div>
+          <div style="flex:1;min-width:60px;text-align:center;background:#f8f9fa;border-radius:6px;padding:8px"><div style="font-size:18px">👍</div><div style="font-size:18px;font-weight:600;color:#202124">8</div><div style="font-size:10px;color:#5f6368">Bom</div></div>
+          <div style="flex:1;min-width:60px;text-align:center;background:#f8f9fa;border-radius:6px;padding:8px"><div style="font-size:18px">⚠️</div><div style="font-size:18px;font-weight:600;color:#202124">6</div><div style="font-size:10px;color:#5f6368">Atenção</div></div>
+        </div>
+        <table class="ls-table">
+          <tr><th>Vendedor</th><th>Vendas</th><th>Faturamento</th><th>Perf.</th></tr>
+          <tr><td>Ana</td><td>18</td><td>R$ 328K</td><td><span class="ls-badge star">Destaque</span></td></tr>
+          <tr><td>João</td><td>15</td><td>R$ 252K</td><td><span class="ls-badge star">Destaque</span></td></tr>
+          <tr><td>Carla</td><td>12</td><td>R$ 174K</td><td><span class="ls-badge good">Bom</span></td></tr>
+          <tr><td>Pedro</td><td>10</td><td>R$ 123K</td><td><span class="ls-badge good">Bom</span></td></tr>
+          <tr><td>Lucas</td><td>8</td><td>R$ 81K</td><td><span class="ls-badge warn">Atenção</span></td></tr>
+          <tr><td>Marina</td><td>6</td><td>R$ 52K</td><td><span class="ls-badge warn">Atenção</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="ls-grid g2">
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Desconto Médio Concedido</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-bar">
+          <div class="ls-bar-row"><span class="lbl">Ana</span><div class="track"><div class="fill" style="width:32%;background:#34a853"></div></div><span class="rval">3,2%</span></div>
+          <div class="ls-bar-row"><span class="lbl">João</span><div class="track"><div class="fill" style="width:41%;background:#34a853"></div></div><span class="rval">4,1%</span></div>
+          <div class="ls-bar-row"><span class="lbl">Carla</span><div class="track"><div class="fill" style="width:50%;background:#7cb342"></div></div><span class="rval">5,0%</span></div>
+          <div class="ls-bar-row"><span class="lbl">Pedro</span><div class="track"><div class="fill" style="width:63%;background:#fbbc04"></div></div><span class="rval">6,3%</span></div>
+          <div class="ls-bar-row"><span class="lbl">Lucas</span><div class="track"><div class="fill" style="width:78%;background:#ea8600"></div></div><span class="rval">7,8%</span></div>
+          <div class="ls-bar-row"><span class="lbl">Marina</span><div class="track"><div class="fill" style="width:92%;background:#ea4335"></div></div><span class="rval">9,2%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Distribuição — Vendas por Concessionária</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-bar">
+          <div class="ls-bar-row"><span class="lbl">Alpha</span><div class="track"><div class="fill" style="width:100%;background:#1967d2"></div></div><span class="rval">65 (42%)</span></div>
+          <div class="ls-bar-row"><span class="lbl">Beta</span><div class="track"><div class="fill" style="width:69%;background:#4285f4"></div></div><span class="rval">45 (29%)</span></div>
+          <div class="ls-bar-row"><span class="lbl">Gamma</span><div class="track"><div class="fill" style="width:48%;background:#669df6"></div></div><span class="rval">31 (20%)</span></div>
+          <div class="ls-bar-row"><span class="lbl">Delta</span><div class="track"><div class="fill" style="width:23%;background:#8ab4f8"></div></div><span class="rval">15 (10%)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!--  PAGE 3 - CLIENTES                                               -->
+<!-- ================================================================ -->
+<div class="page-content" id="page-clientes">
+  <div class="ls-filters">
+    <span class="label">Filtros:</span>
+    <span class="ls-fctrl">Período: Últimos 12 meses <span class="arrow">▾</span></span>
+    <span class="ls-fctrl">Cidade: Todas <span class="arrow">▾</span></span>
+    <span class="ls-date-range">📅 01/07/2025 – 30/06/2026</span>
+  </div>
+  <div class="ls-grid g4">
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Total de Clientes</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Únicos no período</div><div class="val">720</div><div class="trend up">▲ 8,1% vs período anterior</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Ticket Médio por Cliente</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Gasto total médio</div><div class="val">R$ 3,3K</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Cliente Top 1</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Maior gasto total</div><div class="val" style="font-size:18px">José Silva</div><div class="sub">R$ 245K gastos</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Clientes Recorrentes</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Compraram mais de 1 vez</div><div class="val">124</div><div class="sub">17,2% dos clientes</div></div></div></div>
+  </div>
+  <div class="ls-grid g2">
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Top 10 — Clientes por Gasto Total</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-bar">
+          <div class="ls-bar-row"><span class="lbl">José S.</span><div class="track"><div class="fill" style="width:100%;background:#1967d2"></div></div><span class="rval">R$ 245K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Maria C.</span><div class="track"><div class="fill" style="width:81%;background:#4285f4"></div></div><span class="rval">R$ 198K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Carlos M.</span><div class="track"><div class="fill" style="width:71%;background:#669df6"></div></div><span class="rval">R$ 175K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Ana P.</span><div class="track"><div class="fill" style="width:62%;background:#8ab4f8"></div></div><span class="rval">R$ 152K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Pedro A.</span><div class="track"><div class="fill" style="width:52%;background:#aecbfa"></div></div><span class="rval">R$ 128K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Luciana</span><div class="track"><div class="fill" style="width:43%;background:#c6dafc"></div></div><span class="rval">R$ 105K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Rafael</span><div class="track"><div class="fill" style="width:34%;background:#e0ecff"></div></div><span class="rval">R$ 84K</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Clientes por Faixa de Gasto</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-donut">
+          <div class="ring" style="background:conic-gradient(#1967d2 0deg 18deg,#4285f4 18deg 72deg,#8ab4f8 72deg 151deg,#e0ecff 151deg 360deg)"></div>
+          <div class="legend">
+            <div class="item"><div class="dot" style="background:#1967d2"></div> > R$ 100K <span class="p">5% (36)</span></div>
+            <div class="item"><div class="dot" style="background:#4285f4"></div> R$ 50-100K <span class="p">15% (108)</span></div>
+            <div class="item"><div class="dot" style="background:#8ab4f8"></div> R$ 20-50K <span class="p">22% (158)</span></div>
+            <div class="item"><div class="dot" style="background:#e0ecff"></div> < R$ 20K <span class="p">58% (418)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ls-grid g2">
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Recorrentes vs Novos (mês a mês)</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div style="display:flex;gap:16px;margin-bottom:8px;font-size:12px">
+          <span><span style="display:inline-block;width:12px;height:12px;background:#1967d2;border-radius:2px;vertical-align:middle;margin-right:4px"></span> Recorrentes</span>
+          <span><span style="display:inline-block;width:12px;height:12px;background:#dadce0;border-radius:2px;vertical-align:middle;margin-right:4px"></span> Novos</span>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:2px;height:100px;padding:4px 0">
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center;gap:1px">
+            <div style="width:100%;height:50%;background:#dadce0;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:30%;background:#1967d2;border-radius:2px 2px 0 0"></div>
+            <span style="font-size:9px;color:#5f6368">Jan</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center;gap:1px">
+            <div style="width:100%;height:42%;background:#dadce0;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:35%;background:#1967d2;border-radius:2px 2px 0 0"></div>
+            <span style="font-size:9px;color:#5f6368">Fev</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center;gap:1px">
+            <div style="width:100%;height:55%;background:#dadce0;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:28%;background:#1967d2;border-radius:2px 2px 0 0"></div>
+            <span style="font-size:9px;color:#5f6368">Mar</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center;gap:1px">
+            <div style="width:100%;height:38%;background:#dadce0;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:42%;background:#1967d2;border-radius:2px 2px 0 0"></div>
+            <span style="font-size:9px;color:#5f6368">Abr</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center;gap:1px">
+            <div style="width:100%;height:58%;background:#dadce0;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:25%;background:#1967d2;border-radius:2px 2px 0 0"></div>
+            <span style="font-size:9px;color:#5f6368">Mai</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center;gap:1px">
+            <div style="width:100%;height:46%;background:#dadce0;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:38%;background:#1967d2;border-radius:2px 2px 0 0"></div>
+            <span style="font-size:9px;color:#5f6368">Jun</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Ticket Médio por Cliente (Top 5)</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-bar">
+          <div class="ls-bar-row"><span class="lbl">José S.</span><div class="track"><div class="fill" style="width:100%;background:#1967d2"></div></div><span class="rval">R$ 245K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Maria C.</span><div class="track"><div class="fill" style="width:81%;background:#4285f4"></div></div><span class="rval">R$ 198K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Carlos M.</span><div class="track"><div class="fill" style="width:71%;background:#669df6"></div></div><span class="rval">R$ 175K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Ana P.</span><div class="track"><div class="fill" style="width:62%;background:#8ab4f8"></div></div><span class="rval">R$ 152K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Pedro A.</span><div class="track"><div class="fill" style="width:52%;background:#aecbfa"></div></div><span class="rval">R$ 128K</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!--  PAGE 4 - REGIONAL                                               -->
+<!-- ================================================================ -->
+<div class="page-content" id="page-regional">
+  <div class="ls-filters">
+    <span class="label">Filtros:</span>
+    <span class="ls-fctrl">Ano: 2026 <span class="arrow">▾</span></span>
+    <span class="ls-fctrl">Vendedor: Todos <span class="arrow">▾</span></span>
+    <span class="ls-fctrl">Concessionária: Todas <span class="arrow">▾</span></span>
+  </div>
+  <div class="ls-grid g4">
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Estados Atendidos</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Unidades federativas</div><div class="val">5</div><div class="sub">SP, RJ, MG, RS, PR</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Cidades Atendidas</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Municípios</div><div class="val">12</div><div class="sub">Em 5 estados</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Faturamento Top 1 Estado</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Maior faturamento</div><div class="val" style="font-size:18px">São Paulo</div><div class="sub">R$ 980K — 40% do total</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Concentração Top 3</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">SP + RJ + MG</div><div class="val">78%</div><div class="sub">R$ 1,91M dos R$ 2,45M</div></div></div></div>
+  </div>
+  <div class="ls-grid g13">
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Faturamento por Estado (Treemap)</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-tree">
+          <div class="blk tall" style="background:#1967d2;font-size:22px">SP<div class="pct">40%</div></div>
+          <div class="blk" style="background:#4285f4;font-size:18px">RJ<div class="pct">22%</div></div>
+          <div class="blk" style="background:#669df6;font-size:16px">MG<div class="pct">17%</div></div>
+          <div class="blk" style="background:#8ab4f8;font-size:14px">RS<div class="pct">12%</div></div>
+          <div class="blk" style="background:#aecbfa;font-size:12px">PR<div class="pct">9%</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Faturamento por Cidade (Top 5)</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-bar">
+          <div class="ls-bar-row"><span class="lbl">São Paulo</span><div class="track"><div class="fill" style="width:100%;background:#1967d2"></div></div><span class="rval">R$ 980K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Rio de Jan.</span><div class="track"><div class="fill" style="width:55%;background:#4285f4"></div></div><span class="rval">R$ 520K</span></div>
+          <div class="ls-bar-row"><span class="lbl">B. Horizonte</span><div class="track"><div class="fill" style="width:45%;background:#669df6"></div></div><span class="rval">R$ 410K</span></div>
+          <div class="ls-bar-row"><span class="lbl">P. Alegre</span><div class="track"><div class="fill" style="width:26%;background:#8ab4f8"></div></div><span class="rval">R$ 250K</span></div>
+          <div class="ls-bar-row"><span class="lbl">Curitiba</span><div class="track"><div class="fill" style="width:19%;background:#aecbfa"></div></div><span class="rval">R$ 180K</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ls-grid g2">
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Evolução por Estado (Top 3)</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div style="display:flex;gap:16px;margin-bottom:8px;font-size:12px">
+          <span><span style="display:inline-block;width:12px;height:3px;background:#1967d2;vertical-align:middle;margin-right:4px;border-radius:2px"></span> SP</span>
+          <span><span style="display:inline-block;width:12px;height:3px;background:#ea8600;vertical-align:middle;margin-right:4px;border-radius:2px"></span> RJ</span>
+          <span><span style="display:inline-block;width:12px;height:3px;background:#34a853;vertical-align:middle;margin-right:4px;border-radius:2px"></span> MG</span>
+        </div>
+        <div class="ls-ts" style="height:120px">
+          <div class="col"><div class="pill" style="height:55%;background:#1967d2"></div><div class="pill" style="height:35%;background:#ea8600;margin-top:2px"></div><div class="pill" style="height:25%;background:#34a853;margin-top:2px"></div><span class="xlabel">Jan</span></div>
+          <div class="col"><div class="pill" style="height:50%;background:#1967d2"></div><div class="pill" style="height:32%;background:#ea8600;margin-top:2px"></div><div class="pill" style="height:28%;background:#34a853;margin-top:2px"></div><span class="xlabel">Fev</span></div>
+          <div class="col"><div class="pill" style="height:48%;background:#1967d2"></div><div class="pill" style="height:38%;background:#ea8600;margin-top:2px"></div><div class="pill" style="height:30%;background:#34a853;margin-top:2px"></div><span class="xlabel">Mar</span></div>
+          <div class="col"><div class="pill" style="height:60%;background:#1967d2"></div><div class="pill" style="height:40%;background:#ea8600;margin-top:2px"></div><div class="pill" style="height:32%;background:#34a853;margin-top:2px"></div><span class="xlabel">Abr</span></div>
+          <div class="col"><div class="pill" style="height:58%;background:#1967d2"></div><div class="pill" style="height:42%;background:#ea8600;margin-top:2px"></div><div class="pill" style="height:35%;background:#34a853;margin-top:2px"></div><span class="xlabel">Mai</span></div>
+          <div class="col"><div class="pill" style="height:68%;background:#1967d2"></div><div class="pill" style="height:45%;background:#ea8600;margin-top:2px"></div><div class="pill" style="height:38%;background:#34a853;margin-top:2px"></div><span class="xlabel">Jun</span></div>
+          <div class="col"><div class="pill" style="height:62%;background:#1967d2"></div><div class="pill" style="height:48%;background:#ea8600;margin-top:2px"></div><div class="pill" style="height:40%;background:#34a853;margin-top:2px"></div><span class="xlabel">Jul</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Tabela Detalhada por Estado</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <table class="ls-table">
+          <tr><th>Estado</th><th>Faturamento</th><th>Vendas</th><th>Part.</th><th>Ticket</th></tr>
+          <tr><td><strong>SP</strong></td><td>R$ 980K</td><td>62</td><td>40%</td><td>R$ 15,8K</td></tr>
+          <tr><td><strong>RJ</strong></td><td>R$ 520K</td><td>34</td><td>22%</td><td>R$ 15,3K</td></tr>
+          <tr><td><strong>MG</strong></td><td>R$ 410K</td><td>28</td><td>17%</td><td>R$ 14,6K</td></tr>
+          <tr><td><strong>RS</strong></td><td>R$ 250K</td><td>18</td><td>12%</td><td>R$ 13,9K</td></tr>
+          <tr><td><strong>PR</strong></td><td>R$ 180K</td><td>14</td><td>9%</td><td>R$ 12,9K</td></tr>
+          <tr style="background:#f8f9fa;font-weight:600"><td>Total</td><td>R$ 2,34M</td><td>156</td><td>100%</td><td>R$ 15,0K</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!--  PAGE 5 - TEMPORAL                                               -->
+<!-- ================================================================ -->
+<div class="page-content" id="page-temporal">
+  <div class="ls-filters">
+    <span class="label">Filtros:</span>
+    <span class="ls-fctrl">Ano: 2026 <span class="arrow">▾</span></span>
+    <span class="ls-fctrl">Concessionária: Todas <span class="arrow">▾</span></span>
+    <span class="ls-date-range">📅 01/01/2026 – 30/06/2026</span>
+  </div>
+  <div class="ls-grid g4">
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Faturamento do Mês</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Junho/2026</div><div class="val">R$ 210K</div><div class="trend down">▼ 8,7% vs mês anterior</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Faturamento YTD</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Acumulado jan-jun 2026</div><div class="val">R$ 1,4M</div><div class="trend up">▲ 27% vs YTD 2025</div></div></div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Meta Anual</h3><span class="menu">⋮</span></div><div class="ls-chart-body">
+      <div class="scorecard">
+        <div style="font-size:13px;font-weight:500;color:#5f6368">R$ 1,4M de R$ 3,0M</div>
+        <div class="ls-progress" style="margin:8px 0"><div class="fill" style="width:47%">47%</div></div>
+        <div style="font-size:12px;color:#5f6368">Projeção: R$ 2,8M (93% da meta)</div>
+      </div>
+    </div></div>
+    <div class="ls-chart"><div class="ls-chart-head"><h3>Mês + Rentável (Safra)</h3><span class="menu">⋮</span></div><div class="ls-chart-body"><div class="scorecard"><div class="label">Ranking histórico</div><div class="val" style="font-size:18px">🥇 Dezembro</div><div class="sub">R$ 280K — maior faturamento</div></div></div></div>
+  </div>
+  <div class="ls-grid g2">
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Faturamento Mensal vs Meta</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div style="display:flex;gap:16px;margin-bottom:8px;font-size:12px">
+          <span><span style="display:inline-block;width:12px;height:12px;background:#1967d2;border-radius:2px;vertical-align:middle;margin-right:4px"></span> Realizado</span>
+          <span><span style="display:inline-block;width:20px;height:2px;background:#d93025;border-radius:2px;vertical-align:middle;margin-right:4px"></span> Meta (R$ 200K/mês)</span>
+        </div>
+        <div class="ls-ts">
+          <div class="ref" style="bottom:62%">Meta mensal</div>
+          <div class="col"><div class="pill" style="height:48%"></div><span class="xlabel">Jan</span></div>
+          <div class="col"><div class="pill" style="height:55%"></div><span class="xlabel">Fev</span></div>
+          <div class="col"><div class="pill" style="height:42%"></div><span class="xlabel">Mar</span></div>
+          <div class="col"><div class="pill" style="height:65%"></div><span class="xlabel">Abr</span></div>
+          <div class="col"><div class="pill" style="height:52%"></div><span class="xlabel">Mai</span></div>
+          <div class="col"><div class="pill" style="height:60%"></div><span class="xlabel">Jun</span></div>
+          <div class="col"><div class="pill" style="height:68%"></div><span class="xlabel">Jul</span></div>
+          <div class="col"><div class="pill" style="height:75%"></div><span class="xlabel">Ago</span></div>
+          <div class="col"><div class="pill" style="height:58%"></div><span class="xlabel">Set</span></div>
+          <div class="col"><div class="pill" style="height:80%"></div><span class="xlabel">Out</span></div>
+          <div class="col"><div class="pill" style="height:72%"></div><span class="xlabel">Nov</span></div>
+          <div class="col"><div class="pill" style="height:90%"></div><span class="xlabel">Dez</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Meses Mais Rentáveis (Ranking)</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div class="ls-bar">
+          <div class="ls-bar-row"><span class="lbl" style="width:82px">🥇 Dezembro</span><div class="track"><div class="fill" style="width:100%;background:#1967d2"></div></div><span class="rval">R$ 280K</span></div>
+          <div class="ls-bar-row"><span class="lbl" style="width:82px">🥈 Janeiro</span><div class="track"><div class="fill" style="width:93%;background:#4285f4"></div></div><span class="rval">R$ 260K</span></div>
+          <div class="ls-bar-row"><span class="lbl" style="width:82px">🥉 Março</span><div class="track"><div class="fill" style="width:86%;background:#669df6"></div></div><span class="rval">R$ 240K</span></div>
+          <div class="ls-bar-row"><span class="lbl" style="width:82px">Outubro</span><div class="track"><div class="fill" style="width:79%;background:#8ab4f8"></div></div><span class="rval">R$ 220K</span></div>
+          <div class="ls-bar-row"><span class="lbl" style="width:82px">Agosto</span><div class="track"><div class="fill" style="width:71%;background:#aecbfa"></div></div><span class="rval">R$ 200K</span></div>
+          <div class="ls-bar-row"><span class="lbl" style="width:82px">Abril</span><div class="track"><div class="fill" style="width:64%;background:#c6dafc"></div></div><span class="rval">R$ 180K</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ls-grid g2">
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Acumulado YTD (Progresso)</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#5f6368;margin-bottom:6px"><span>Acumulado: R$ 1,4M</span><span>Meta: R$ 3,0M</span></div>
+        <div style="display:flex;align-items:flex-end;gap:2px;height:90px;padding:4px 0">
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center"><div style="width:100%;height:15%;background:#1967d2;opacity:.5;border-radius:2px 2px 0 0"></div><span style="font-size:9px;color:#5f6368;margin-top:2px">Jan</span></div>
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center"><div style="width:100%;height:28%;background:#1967d2;opacity:.5;border-radius:2px 2px 0 0"></div><span style="font-size:9px;color:#5f6368;margin-top:2px">Fev</span></div>
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center"><div style="width:100%;height:38%;background:#1967d2;opacity:.5;border-radius:2px 2px 0 0"></div><span style="font-size:9px;color:#5f6368;margin-top:2px">Mar</span></div>
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center"><div style="width:100%;height:50%;background:#1967d2;opacity:.5;border-radius:2px 2px 0 0"></div><span style="font-size:9px;color:#5f6368;margin-top:2px">Abr</span></div>
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center"><div style="width:100%;height:62%;background:#1967d2;opacity:.65;border-radius:2px 2px 0 0"></div><span style="font-size:9px;color:#5f6368;margin-top:2px">Mai</span></div>
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center"><div style="width:100%;height:75%;background:#1967d2;opacity:.8;border-radius:2px 2px 0 0"></div><span style="font-size:9px;color:#5f6368;margin-top:2px">Jun</span></div>
+          <div style="flex:1;display:flex;flex-direction:column-reverse;align-items:center"><div style="width:100%;height:82%;background:#1967d2;border-radius:2px 2px 0 0"></div><span style="font-size:9px;color:#5f6368;margin-top:2px">Jul</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ls-chart">
+      <div class="ls-chart-head"><h3>Crescimento YoY</h3><span class="menu">⋮</span></div>
+      <div class="ls-chart-body">
+        <div style="display:flex;gap:16px;margin-bottom:8px;font-size:12px">
+          <span><span style="display:inline-block;width:12px;height:12px;background:#aecbfa;border-radius:2px;vertical-align:middle;margin-right:4px"></span> 2024</span>
+          <span><span style="display:inline-block;width:12px;height:12px;background:#669df6;border-radius:2px;vertical-align:middle;margin-right:4px"></span> 2025</span>
+          <span><span style="display:inline-block;width:12px;height:12px;background:#1967d2;border-radius:2px;vertical-align:middle;margin-right:4px"></span> 2026</span>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:3px;height:100px;padding:4px 0">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <div style="width:100%;height:38%;background:#aecbfa;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:50%;background:#669df6;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:65%;background:#1967d2;border-radius:2px 2px 0 0"></div>
+            <span style="font-size:9px;color:#5f6368">Jan</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <div style="width:100%;height:35%;background:#aecbfa;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:48%;background:#669df6;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:62%;background:#1967d2;border-radius:2px 2px 0 0"></div>
+            <span style="font-size:9px;color:#5f6368">Fev</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <div style="width:100%;height:40%;background:#aecbfa;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:52%;background:#669df6;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:68%;background:#1967d2;border-radius:2px 2px 0 0"></div>
+            <span style="font-size:9px;color:#5f6368">Mar</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <div style="width:100%;height:42%;background:#aecbfa;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:55%;background:#669df6;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:72%;background:#1967d2;border-radius:2px 2px 0 0"></div>
+            <span style="font-size:9px;color:#5f6368">Abr</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <div style="width:100%;height:45%;background:#aecbfa;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:58%;background:#669df6;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:75%;background:#1967d2;border-radius:2px 2px 0 0"></div>
+            <span style="font-size:9px;color:#5f6368">Mai</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <div style="width:100%;height:48%;background:#aecbfa;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:60%;background:#669df6;border-radius:2px 2px 0 0"></div>
+            <div style="width:100%;height:78%;background:#1967d2;border-radius:2px 2px 0 0"></div>
+            <span style="font-size:9px;color:#5f6368">Jun</span>
+          </div>
+        </div>
+        <div style="text-align:center;background:#e8f0fe;padding:8px;border-radius:6px;font-size:13px;color:#1967d2;margin-top:4px">Crescimento YoY 2025→2026: <strong>+27%</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /ls-canvas -->
+
+<script>
+document.querySelectorAll('.ls-page').forEach(function(tab){
+  tab.addEventListener('click', function(e){
+    document.querySelectorAll('.ls-page').forEach(function(t){t.classList.remove('active')});
+    this.classList.add('active');
+    document.querySelectorAll('.page-content').forEach(function(p){p.classList.remove('active')});
+    document.getElementById('page-'+this.getAttribute('data-page')).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
