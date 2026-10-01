@@ -44,6 +44,8 @@ este foi o custo atual do projeto para 7 dias de execução
 | Linguagem | SQL (BigQuery dialect) | — |
 | Linguagem | Python | — |
 
+<img src="img/Engenharia de dados para concessionaria.png" alt="Estrutura do Projeto"/>
+
 ### Por que esta stack?
 
 
