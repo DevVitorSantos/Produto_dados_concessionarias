@@ -179,7 +179,7 @@ A `gold.vw_fato_completa` realiza todos os 5 JOINs e expõe todas as colunas em 
 
 ## Dashboards (Looker Studio) --> <a href="https://datastudio.google.com/reporting/07111107-03eb-4628-a233-9bbf6709d133" target="_blank">Acesso ao looker mvp versão 01</a>
 
-O projeto responde a **7 perguntas de negócio** da diretoria através de **5 dashboards** com cross-filtering entre todos os gráficos:
+O projeto responde a **6 perguntas de negócio** da diretoria através de **5 dashboards** com cross-filtering entre todos os gráficos:
 
 ### 1. Dashboard Executivo
 **Perguntas:** <br>
