@@ -9,7 +9,7 @@ Pipeline ELT no ecossistema Google Cloud que transforma dados brutos de vendas d
 
 O projeto deve ter a capacidade de dar apoio a diretoria, time de negócios e performance a **tomar decisões mais assertivas** no dia a dia.
 
-Atualmente o projeto responde a **7 perguntas de negócio** da diretoria através de **5 dashboards** com cross-filtering entre todos os gráficos:
+Atualmente o projeto responde a **6 perguntas de negócio** da diretoria através de **5 dashboards** com cross-filtering entre todos os gráficos:
 
 - Qual concessionária fatura mais?
 - Quais modelos são mais vendidos?
